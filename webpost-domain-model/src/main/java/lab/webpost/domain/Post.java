@@ -17,16 +17,19 @@ import lab.jackson.LocalDateTimeDeserializer;
 import lab.jackson.LocalDateTimeSerializer;
 
 //TODO: add annotation for entity
-
+@Entity
 public class Post {
 
     //TODO: add annotation for id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
     private String body;
     private LocalDateTime createdAt;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private User author;
 
     
@@ -59,6 +62,8 @@ public class Post {
     }
 
     //TODO: add the JSONSerialze and JsonDeserialize
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
